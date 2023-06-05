@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XLStoMSSQL.Net", "XLStoMSSQL.Net\XLStoMSSQL.Net.csproj", "{EB2B2C32-AB0B-446A-8B75-E825795680BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB2B2C32-AB0B-446A-8B75-E825795680BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2B2C32-AB0B-446A-8B75-E825795680BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2B2C32-AB0B-446A-8B75-E825795680BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2B2C32-AB0B-446A-8B75-E825795680BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {664F43A6-5776-45AB-855D-827AEBB7EA00}
+	EndGlobalSection
+EndGlobal
