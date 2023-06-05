@@ -35,8 +35,26 @@ namespace XLStoMSSQL.Net.Utils
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
+                conn.Open();
+                return true;
+            }
+        }
+
+        public static async Task<bool> CheckConnectionAsync()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                await conn.OpenAsync();
+                return true;
+            }
+        }
+
+        public static bool CheckDatabase()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
                 var CurDatabase = conn.Database;
-                conn.ChangeDatabase("master");
+                conn.ConnectionString = ConnectionString.Replace(CurDatabase, "master");
                 conn.Open();
 
                 var qry = $"SELECT db_id('{CurDatabase}')";
@@ -44,7 +62,7 @@ namespace XLStoMSSQL.Net.Utils
                 int? exists = conn.ExecuteScalar<int>(qry);
                 if (exists == null || exists <= 0)
                 {
-                    qry = "Create database {CurDatabase}";
+                    qry = $"Create database {CurDatabase}";
                     conn.Execute(qry);
                 }
 
@@ -54,20 +72,20 @@ namespace XLStoMSSQL.Net.Utils
             }
         }
 
-        public static async Task<bool> CheckConnectionAsync()
+        public static async Task<bool> CheckDatabaseAsync()
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 var CurDatabase = conn.Database;
-                conn.ChangeDatabase("master");
+                conn.ConnectionString = ConnectionString.Replace(CurDatabase, "master");
                 await conn.OpenAsync();
                 var qry = $"SELECT db_id('{CurDatabase}')";
 
                 int? exists = await conn.ExecuteScalarAsync<int>(qry);
-                if (exists == null || exists <= 0) 
+                if (exists == null || exists <= 0)
                 {
-                    qry = "Create database {CurDatabase}";
-                    await conn.ExecuteAsync(qry);
+                    qry = $"Create database {CurDatabase}";
+                    conn.Execute(qry);
                 }
 
                 conn.ChangeDatabase(CurDatabase);

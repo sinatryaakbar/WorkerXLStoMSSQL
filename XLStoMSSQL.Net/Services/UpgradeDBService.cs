@@ -21,36 +21,42 @@ namespace XLStoMSSQL.Net.Services
         {
             try
             {
-                string sqlPath = Path.Combine(Directory.GetCurrentDirectory() , "DB");
-                var sqlDirs = Directory.GetDirectories(sqlPath);
-                foreach (var dir in sqlDirs)
+                var CheckDBExists = DataService.CheckDatabase();
+                if (CheckDBExists)
                 {
-                    var files = Directory.GetFiles(dir, "*.sql");
-                    foreach (var file in files)
+                    string sqlPath = Path.Combine(Directory.GetCurrentDirectory(), "DB");
+                    var sqlDirs = Directory.GetDirectories(sqlPath);
+                    foreach (var dir in sqlDirs)
                     {
-                        try
+                        var files = Directory.GetFiles(dir, "*.sql");
+                        foreach (var file in files)
                         {
-                            _logger.LogInformation("Execute file {0}", file);
-                            DataService.Execute(File.ReadAllText(file), true);
-                            string archPath = file.Replace("DB", "DB_Archive");
+                            try
+                            {
+                                _logger.LogInformation("Execute file {0}", file);
+                                DataService.Execute(File.ReadAllText(file), true);
+                                string archPath = file.Replace("DB", "DB_Archive");
 
-                            if (File.Exists(archPath))
-                                File.Delete(archPath);
+                                if (File.Exists(archPath))
+                                    File.Delete(archPath);
 
-                            var arcDir = Path.GetDirectoryName(archPath);
-                            if (!string.IsNullOrEmpty(arcDir) && !Directory.Exists(arcDir))
-                                Directory.CreateDirectory(arcDir);
+                                var arcDir = Path.GetDirectoryName(archPath);
+                                if (!string.IsNullOrEmpty(arcDir) && !Directory.Exists(arcDir))
+                                    Directory.CreateDirectory(arcDir);
 
-                            File.Move(file, archPath);
+                                File.Move(file, archPath);
 
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Failed execute file {0}", file);
-                            throw;
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogError(ex, "Failed execute file {0}", file);
+                                throw;
+                            }
                         }
                     }
                 }
+                else
+                    throw new Exception("Database Is Not Exists or Failed to create to this server!");
             }
             catch (Exception ex)
             {

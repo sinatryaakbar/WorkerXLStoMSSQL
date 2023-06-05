@@ -2,6 +2,7 @@ IF  NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[D
 BEGIN
     create table DataLog(
 		id int primary key identity(1,1),
+		[App_Name] varchar(100) null,
 		Log_Code varchar(200) null, 
 		Log_Message varchar(max) null, 
 		Log_Type varchar(100) null, 

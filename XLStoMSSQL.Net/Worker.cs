@@ -51,9 +51,9 @@ namespace XLStoMSSQL.Net
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Worker prepare to begin: {time}", DateTimeOffset.Now);
+            bool CheckConn = false;
             while (!stoppingToken.IsCancellationRequested)
             {
-                bool CheckConn = false;
                 while (!CheckConn)
                     CheckConn = await CheckConnection(stoppingToken);
                 
@@ -74,7 +74,7 @@ namespace XLStoMSSQL.Net
                 if (!string.IsNullOrEmpty(_constr.DefaultConnection))
                 {
                     _logger.LogInformation("test database connection: {time}", DateTimeOffset.Now);
-                    CheckConn = await DataService.CheckConnectionAsync();
+                    CheckConn = DataService.CheckConnection();
                 }
                 else
                 {

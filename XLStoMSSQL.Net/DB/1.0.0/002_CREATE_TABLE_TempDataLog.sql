@@ -4,6 +4,7 @@ BEGIN
 		id int primary key identity(1,1),
 		[FileName] varchar(100) null, 
 		PathLocation varchar(200) null, 
+		[App_Name] varchar(100) null,
 		Log_Code varchar(200) null, 
 		Log_Message varchar(max) null, 
 		Log_Type varchar(100) null, 

@@ -38,6 +38,7 @@ internal class Program
     public static IHostBuilder CreateHostBuilder(string[] args) =>
       Host.CreateDefaultBuilder(args)
         .UseSerilog()
+        .UseWindowsService()
         .ConfigureServices((hostContext, services) =>
         {
             services.AddSingleton<IWork, WorkService>();
